@@ -3,7 +3,7 @@ import prisma from "../../prisma/prisma.js";
 class NPCModel {
   // Obter todos os NPCs
   async findAll() {
-    const npcs = await prisma.npc.findMany({
+    const npcs = await prisma.non.findMany({
       orderBy: {
         createdAt: "desc",
       },
@@ -17,7 +17,7 @@ class NPCModel {
 
   // Obter um NPC pelo ID
   async findById(id) {
-    const npc = await prisma.npc.findUnique({
+    const npcc = await prisma.non.findUnique({
       where: {
         id: Number(id),
       },
@@ -26,12 +26,14 @@ class NPCModel {
       },
     });
 
-    return npc;
+    return npcc;
   }
 
   // Criar um novo NPC
   async create(name, description, imgUrl, diaryId) {
-    const novoNPC = await prisma.npc.create({
+    console.log(name, description, imgUrl, diaryId);
+    
+    const novoNPC = await prisma.non.create({
       data: {
         name,
         description,
@@ -45,9 +47,9 @@ class NPCModel {
 
   // Atualizar um NPC
   async update(id, name, description, imgUrl, diaryId) {
-    const npc = await this.findById(id);
+    const non = await this.findById(id);
 
-    if (!npc) {
+    if (!non) {
       return null;
     }
 
@@ -65,7 +67,7 @@ class NPCModel {
       data.diaryId = diaryId;
     }
 
-    const npcAtualizado = await prisma.npc.update({
+    const npcAtualizado = await prisma.non.update({
       where: {
         id: Number(id),
       },
@@ -77,13 +79,13 @@ class NPCModel {
 
   // Remover um NPC
   async delete(id) {
-    const npc = await this.findById(id);
+    const non = await this.findById(id);
 
-    if (!npc) {
+    if (!non) {
       return null;
     }
 
-    await prisma.npc.delete({
+    await prisma.non.delete({
       where: {
         id: Number(id),
       },

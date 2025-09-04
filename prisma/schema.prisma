@@ -18,7 +18,7 @@ model Diary {
   title String
   description String
 
-  npcs NPC[]
+  npcs Non[]
   enemies Enemy[]
   bosses Boss[]
 
@@ -28,7 +28,7 @@ model Diary {
   @@map("diaries")
 }
 
-model NPC {
+model Non {
   id          Int     @id @default(autoincrement())
   name String
   description String
