@@ -13,78 +13,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Anime {
+model Diary {
   id          Int     @id @default(autoincrement())
-  title       String
-  description String?
-  episodes    Int
-  releaseYear Int
-  studio      String
-  genres      String
-  rating      Float
-  imageUrl    String
+  title String
+  description String
+
+  npcs NPC[]
+  enemies Enemy[]
+  bosses Boss[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("animes")
+  @@map("diaries")
 }
 
-model Personagem {
+model NPC {
   id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-  age         Int
-  power       Boolean
-  anime       String
+  name String
+  description String
+  imgUrl String
+
+  diaryId Int
+  diary Diary @relation(fields: [diaryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("personagens")
+  @@map("npcs")
 }
 
-model Collection {
+model Enemy {
   id          Int     @id @default(autoincrement())
-  name        String  @unique
-  description String?
-  releaseYear Int
+  title String
+  description String
+  location String
+  imgUrl String
 
-  // Segundo: marcação da lista de dados da tabela dependente
-  cards Card[]
+  diaryId Int
+  diary Diary @relation(fields: [diaryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("collections")
+  @@map("enemies")
 }
 
-model Card {
-  id            Int     @id @default(autoincrement())
-  name          String  @unique
-  rarity        String
-  attackPoints  Int
-  defensePoints Int
-  imageUrl      String?
+model Boss {
+  id          Int     @id @default(autoincrement())
+  title String
+  description String
+  location String
+  imgUrl String
 
-  // Primeiro: configuração da tabela dependente
-  collectionId Int
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  diaryId Int
+  diary Diary @relation(fields: [diaryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("cards")
-}
-
-model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
+  @@map("bosses")
 }
