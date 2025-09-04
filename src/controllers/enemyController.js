@@ -1,6 +1,6 @@
 import EnemyModel from "../models/enemyModel.js";
 
-class EnemiesController {
+class EnemyController {
     // GET /api/enemies
     async getAllEnemies(req, res) {
         try {
@@ -92,4 +92,4 @@ class EnemiesController {
     }
 }
 
-export default new EnemiesController();
+export default new EnemyController();
