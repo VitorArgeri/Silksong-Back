@@ -1,107 +1,58 @@
 import prisma from "../../prisma/prisma.js";
 
-// Array para armazenar os animes em memória
-/* let animes = [
-  {
-    id: 1,
-    title: "Attack on Titan",
-    description: "Humanidade lutando contra titãs em um mundo pós-apocalíptico",
-    episodes: 75,
-    releaseYear: 2013,
-    studio: "MAPPA",
-    genres: "Ação,Drama,Fantasia",
-    rating: 4.8,
-    imageUrl: "https://example.com/aot.jpg",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    title: "My Hero Academia",
-    description:
-      "Em um mundo onde quase todos possuem superpoderes, um garoto sem poderes luta para se tornar um herói",
-    episodes: 113,
-    releaseYear: 2016,
-    studio: "Bones",
-    genres: "Ação,Comédia,Super-heróis",
-    rating: 4.6,
-    imageUrl: "https://example.com/mha.jpg",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-]; */
-
-class AnimeModel {
-  // Obter todos os animes
+class DiaryModel {
+  // Obter todos os diários
   async findAll() {
-    const animes = await prisma.anime.findMany({
+    const diaries = await prisma.diary.findMany({
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        npcs: true,
+        enemies: true,
+        bosses: true,
+      },
     });
 
-    //console.log(animes);
-
-    return animes;
+    return diaries;
   }
 
-  // Obter um anime pelo ID
+  // Obter um diário pelo ID
   async findById(id) {
-    const anime = await prisma.anime.findUnique({
+    const diary = await prisma.diary.findUnique({
       where: {
         id: Number(id),
       },
-    });
-
-    return anime;
-  }
-
-  // Criar um novo anime
-  async create(
-    title,
-    description,
-    episodes,
-    releaseYear,
-    studio,
-    genres,
-    rating,
-    imageUrl
-  ) {
-    const newAnime = await prisma.anime.create({
-      data: {
-        title,
-        description,
-        episodes,
-        releaseYear,
-        studio,
-        genres,
-        rating,
-        imageUrl,
+      include: {
+        npcs: true,
+        enemies: true,
+        bosses: true,
       },
     });
 
-    return newAnime;
+    return diary;
   }
 
-  // Atualizar um anime
-  async update(
-    id,
-    title,
-    description,
-    episodes,
-    releaseYear,
-    studio,
-    genres,
-    rating,
-    imageUrl
-  ) {
-    const anime = await this.findById(id);
+  // Criar um novo diário
+  async create(title, description) {
+    const newDiary = await prisma.diary.create({
+      data: {
+        title,
+        description,
+      },
+    });
 
-    if (!anime) {
+    return newDiary;
+  }
+
+  // Atualizar um diário
+  async update(id, title, description) {
+    const diary = await this.findById(id);
+
+    if (!diary) {
       return null;
     }
 
-    // Atualize o anime existente com os novos dados
     const data = {};
     if (title !== undefined) {
       data.title = title;
@@ -109,44 +60,26 @@ class AnimeModel {
     if (description !== undefined) {
       data.description = description;
     }
-    if (episodes !== undefined) {
-      data.episodes = episodes;
-    }
-    if (releaseYear !== undefined) {
-      data.releaseYear = releaseYear;
-    }
-    if (studio !== undefined) {
-      data.studio = studio;
-    }
-    if (genres !== undefined) {
-      data.genres = genres;
-    }
-    if (rating !== undefined) {
-      data.rating = rating;
-    }
-    if (imageUrl !== undefined) {
-      data.imageUrl = imageUrl;
-    }
 
-    const animeUpdated = await prisma.anime.update({
+    const diaryUpdated = await prisma.diary.update({
       where: {
         id: Number(id),
       },
       data,
     });
 
-    return animeUpdated;
+    return diaryUpdated;
   }
 
-  // Remover um anime
+  // Remover um diário
   async delete(id) {
-    const anime = await this.findById(id);
+    const diary = await this.findById(id);
 
-    if (!anime) {
+    if (!diary) {
       return null;
     }
 
-    await prisma.anime.delete({
+    await prisma.diary.delete({
       where: {
         id: Number(id),
       },
@@ -156,4 +89,4 @@ class AnimeModel {
   }
 }
 
-export default new AnimeModel();
+export default new DiaryModel();
