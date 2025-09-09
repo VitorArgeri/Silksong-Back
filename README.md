@@ -66,7 +66,7 @@ npm install
 
 4. **Iniciar o servidor**
   ```bash
-  npm start
+  npm run dev
   ```
 
 ---
