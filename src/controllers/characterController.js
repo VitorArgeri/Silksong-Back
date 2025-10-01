@@ -33,15 +33,15 @@ class CharacterController {
     // POST /api/characters
     async createCharacter(req, res) {
         try {
-            const { name, description, type, location, imgUrl, diaryId } = req.body;
+            const { name, description, type, location, imgUrl, difficulty, diaryId } = req.body;
 
-            if (!name || !description || !location || !type || !imgUrl || !diaryId) {
+            if (!name || !description || !location || !type || !imgUrl || !difficulty || !diaryId) {
                 return res.status(400).json({
-                    error: "Os campos 'name', 'description', 'location', 'imgUrl' e 'diaryId' são obrigatórios",
+                    error: "Os campos 'name', 'description', 'location', 'type', 'imgUrl', 'difficulty' e 'diaryId' são obrigatórios",
                 });
             }
 
-            const newCharacter = await CharacterModel.create(name, description, type, location, imgUrl, diaryId);
+            const newCharacter = await CharacterModel.create(name, description, location, type, imgUrl, difficulty, diaryId);
 
             if (!newCharacter) {
                 return res.status(400).json({ error: "Erro ao criar personagem" });
@@ -58,9 +58,9 @@ class CharacterController {
     async updateCharacter(req, res) {
         try {
             const { id } = req.params;
-            const { name, description, type, location, imgUrl, diaryId } = req.body;
+            const { name, description, type, location, imgUrl, difficulty, diaryId } = req.body;
 
-            const updatedCharacter = await CharacterModel.update(id, name, description, type, location, imgUrl, diaryId);
+            const updatedCharacter = await CharacterModel.update(id, name, description, location, type, imgUrl, difficulty, diaryId);
 
             if (!updatedCharacter) {
                 return res.status(404).json({ error: "Personagem não encontrado" });

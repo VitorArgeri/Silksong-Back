@@ -8,9 +8,7 @@ class DiaryModel {
         createdAt: "desc",
       },
       include: {
-        npcs: true,
-        enemies: true,
-        bosses: true,
+        characters: true,
       },
     });
 
@@ -24,9 +22,7 @@ class DiaryModel {
         id: Number(id),
       },
       include: {
-        npcs: true,
-        enemies: true,
-        bosses: true,
+        characters: true,
       },
     });
 

@@ -30,9 +30,10 @@ model Character {
   id          Int     @id @default(autoincrement())
   name String
   description String
-  location String
   type String
+  location String
   imgUrl String
+  difficulty String
 
   diaryId Int
   diary Diary @relation(fields: [diaryId], references: [id], onDelete: Cascade, onUpdate: Cascade)

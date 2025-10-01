@@ -30,7 +30,7 @@ class CharacterModel {
     }
 
     // Criar um novo personagem
-    async create(name, description, location, type, imgUrl, diaryId) {
+    async create(name, description, location, type, imgUrl, difficulty, diaryId) {
         const newCharacter = await prisma.character.create({
             data: {
                 name,
@@ -38,6 +38,7 @@ class CharacterModel {
                 location,
                 type,
                 imgUrl,
+                difficulty,
                 diaryId,
             },
         });
@@ -46,7 +47,7 @@ class CharacterModel {
     }
 
     // Atualizar um personagem
-    async update(id, name, description, location, type, imgUrl, diaryId) {
+    async update(id, name, description, location, type, imgUrl, difficulty, diaryId) {
         const character = await this.findById(id);
 
         if (!character) {
@@ -68,6 +69,9 @@ class CharacterModel {
         }
         if (type !== undefined) {
             data.type = type;
+        }
+        if (difficulty !== undefined) {
+            data.difficulty = difficulty;
         }
         if (diaryId !== undefined) {
             data.diaryId = diaryId;
