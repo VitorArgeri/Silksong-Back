@@ -18,9 +18,7 @@ model Diary {
   title String
   description String
 
-  npcs Non[]
-  enemies Enemy[]
-  bosses Boss[]
+  characters Character[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -28,24 +26,7 @@ model Diary {
   @@map("diaries")
 }
 
-model Non {
-  id          Int     @id @default(autoincrement())
-  name String
-  description String
-  imgUrl String
-  location String
-  type String
-
-  diaryId Int
-  diary Diary @relation(fields: [diaryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("npcs")
-}
-
-model Enemy {
+model Character {
   id          Int     @id @default(autoincrement())
   title String
   description String
@@ -59,22 +40,5 @@ model Enemy {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("enemies")
-}
-
-model Boss {
-  id          Int     @id @default(autoincrement())
-  title String
-  description String
-  location String
-  type String
-  imgUrl String
-
-  diaryId Int
-  diary Diary @relation(fields: [diaryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("bosses")
+  @@map("characters")
 }
