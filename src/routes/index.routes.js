@@ -6,6 +6,7 @@ import diariesRouter from "./diaryRouter.js";
 import npcRouter from "./npcRouter.js";
 import enemyRouter from "./enemyRouter.js";
 import bossRouter from "./bossRouter.js";
+import characterRouter from "./characterRouter.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
 
@@ -17,6 +18,7 @@ router.use("/diaries", diariesRouter);
 router.use("/npcs", npcRouter);
 router.use("/enemies", enemyRouter);
 router.use("/bosses", bossRouter);
+router.use("/characters", characterRouter);
 
 // Rotas protegidas
 router.use(authMiddleware);
