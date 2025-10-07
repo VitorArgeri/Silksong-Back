@@ -25,6 +25,7 @@ JWT_SECRET="sua_chave_secreta_aqui"
 Aplicar as migrações:
 ```bash
 npx prisma migrate dev
+npx prisma generate
 ```
 
 ## Rodar o servidor
